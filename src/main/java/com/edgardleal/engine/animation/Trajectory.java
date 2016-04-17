@@ -10,9 +10,13 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.edgardleal.engine.Vetor;
 
 public class Trajectory {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Trajectory.class);
   ArrayList<Vetor> vetores = new ArrayList<Vetor>();
   Vetor deslocamento = new Vetor(2, 0);
   int x, y, pos = 0;
@@ -43,7 +47,7 @@ public class Trajectory {
     y = +(int) (vetores.get(pos).getY());
     if (vetores.get(pos).getRaio() < 1.5)
       pos++;
-    System.out.println(vetores.get(pos).getRaio());
+    LOGGER.debug("Raio: {}", vetores.get(pos).getRaio());
     return true;
   }
 
@@ -60,7 +64,7 @@ public class Trajectory {
 
     Tela tela = new Tela(t);
     tela.setVisible(true);
-    System.err.println("fim da execu��o");
+    LOGGER.info("fim da execu��o");
     System.exit(0);
   }
 }
@@ -71,7 +75,7 @@ class Tela extends JDialog implements Runnable {
 	 * 
 	 */
   private static final long serialVersionUID = -382822471525634591L;
-  private Thread controle = new Thread(this);
+  private Thread controle = new Thread(this, this.getClass().getSimpleName());
   private Trajectory t;
   private Vetor v;
   private int delay = 100, x = 0, y = 0;

@@ -27,7 +27,7 @@ public class MediaCenter implements Runnable {
 
   public MediaCenter(JApplet applet) {
     this.applet = applet;
-    controle = new Thread(this);
+    controle = new Thread(this, getClass().getSimpleName());
   }
 
   public void add(String image) {
@@ -128,20 +128,20 @@ public class MediaCenter implements Runnable {
       erro = true; /* Silenciador */
     }
 
-    int total_ok = 0;
+    int totalOk = 0;
     while (!getTracker().checkAll()) {
-      total_ok = 0;
+      totalOk = 0;
       for (int i = 0; i < getImages().size(); i++) {
-        total_ok += getTracker().checkID(i) ? 1 : 0;
+        totalOk += getTracker().checkID(i) ? 1 : 0;
       }
 
       // getProgressBar().setValue(total_ok);
-      if (total_ok == getImages().size() || erro)
+      if (totalOk == getImages().size() || erro)
         break;
 
       try {
         Thread.sleep(100);
-        System.out.println("Itens checkados " + total_ok + " , total de itens "
+        System.out.println("Itens checkados " + totalOk + " , total de itens "
             + getImages().size());
       } catch (Exception e) {
         // Sinlenciador da exce��o

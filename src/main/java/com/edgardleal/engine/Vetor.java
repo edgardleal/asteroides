@@ -80,11 +80,11 @@ public class Vetor {
    * @param v
    */
   public void subtrair(Vetor v) {
-    double raio_anterior = v.getRaio();
-    if (raio_anterior > raio)
+    double raioAnterior = v.getRaio();
+    if (raioAnterior > raio)
       v.setRaio(raio);
     subtrair(v.getX(), v.getY());
-    v.setRaio(raio_anterior);// devolve o valor original para o objeto par�metro
+    v.setRaio(raioAnterior);// devolve o valor original para o objeto par�metro
   }
 
   /**
