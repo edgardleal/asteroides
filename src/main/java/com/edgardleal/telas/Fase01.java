@@ -33,9 +33,7 @@ public class Fase01 extends Cenario {
 
       // addPrintable(new Mosquito(applet, this));
 
-      imgFundo =
-          applet
-              .getImage(new URL(applet.getDocumentBase(), "img/fundo ok.jpg"));
+      imgFundo = applet.getImage(new URL(applet.getDocumentBase(), "img/fundo ok.jpg"));
       setImgFundo(imgFundo);
       setBounds(0, 0, 500, 500);
 

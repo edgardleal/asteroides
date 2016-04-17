@@ -4,151 +4,151 @@ import java.util.ArrayList;
 
 
 public class ColisionCenter {
-	private ArrayList<Colidivel> lista;
+  private ArrayList<Colidivel> lista;
 
-	public ColisionCenter() {
-		super();
-	}
+  public ColisionCenter() {
+    super();
+  }
 
-	private int getRaio(Colidivel c){
-		return c.getWidth()/2;
-	}
-	private int getDistancia(Colidivel a, Colidivel b){
-		int x1 = a.getX()+ a.getWidth() /2,
-		    y1 = a.getY()+ a.getHeight()/2,
-		    x2 = b.getX()+ b.getWidth() /2,
-		    y2 = b.getY()+ b.getHeight()/2;
-		
-		return ((int)Math.sqrt(Math.pow(x1-x2,2)+
-				               Math.pow(y1-y2,2)));
-	}
-	
-	/**Verifica se há algum objeto em estado de colisão , caso haja,
-	 * os dois objetos em colisão serão notificados;
-	 * 
-	 */
-	public boolean verifica(){
-		boolean result = false;
-		for (int i = 0; i < getLista().size(); i++){ 
-			if(!getLista().get(i).isSolid()) continue;
-			for (int j = 0; j < getLista().size(); j++) {
-				if(!getLista().get(j).isSolid()||getLista().get(i)==getLista().get(j)) continue;
-//				System.out.println("Comparando : " + getLista().get(i));
-//				System.out.println("E " + getLista().get(j) + "\n");
-				if(colidindo(getLista().get(i),
-						     getLista().get(j))){
-					getLista().get(i).colidiu(getLista().get(j));
-					result = true;
-				}//if
-			}//for j
-		}//for i
-		return result;
-	}//verifica
-	
-	private boolean colidindo(Colidivel a, Colidivel b){
-		return getDistancia(a,b)<=
-			getRaio(a)+getRaio(b);
-	}
-	
-	/**Adiciona um item a lista para ser usado na virificação de colisão,
-	 * Para que seja verificada a colisão é preciso que os objetos tenham sua propiedade 
-	 * isSolid esteja com o valor true.
-	 * 
-	 */
-	public void add(Colidivel c){
-		getLista().add(c);
-	}
-	
-	/**Retorna a lista de todos os objetos adicionados para a verificação de colisão.
-	 * 
-	 * @return
-	 */
-	public ArrayList<Colidivel> getLista(){
-		if (lista==null) {
-			lista = new ArrayList<Colidivel>();
-		}
-		return lista;
-	}
-	
-	/**Método implementado apenas para verificação de funcionalidade de forma local.
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		ColisionCenter c = new ColisionCenter();
-		Colidivel a  = new Colidivel(){
+  private int getRaio(Colidivel c) {
+    return c.getWidth() / 2;
+  }
 
-			@Override
-			public void colidiu(Colidivel c) {
-			}
-			@Override
-			public int getHeight() {
-				return 10;
-			}
+  private int getDistancia(Colidivel a, Colidivel b) {
+    int x1 = a.getX() + a.getWidth() / 2, y1 = a.getY() + a.getHeight() / 2, x2 =
+        b.getX() + b.getWidth() / 2, y2 = b.getY() + b.getHeight() / 2;
 
-			@Override
-			public int getRaio() {
-				return 5;
-			}
+    return ((int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)));
+  }
 
-			@Override
-			public int getWidth() {
-				return 10;
-			}
+  /**
+   * Verifica se hï¿½ algum objeto em estado de colisï¿½o , caso haja, os dois objetos em colisï¿½o serï¿½o
+   * notificados;
+   * 
+   */
+  public boolean verifica() {
+    boolean result = false;
+    for (int i = 0; i < getLista().size(); i++) {
+      if (!getLista().get(i).isSolid())
+        continue;
+      for (int j = 0; j < getLista().size(); j++) {
+        if (!getLista().get(j).isSolid() || getLista().get(i) == getLista().get(j))
+          continue;
+        // System.out.println("Comparando : " + getLista().get(i));
+        // System.out.println("E " + getLista().get(j) + "\n");
+        if (colidindo(getLista().get(i), getLista().get(j))) {
+          getLista().get(i).colidiu(getLista().get(j));
+          result = true;
+        }// if
+      }// for j
+    }// for i
+    return result;
+  }// verifica
 
-			@Override
-			public int getX() {
-				return 0;
-			}
+  private boolean colidindo(Colidivel a, Colidivel b) {
+    return getDistancia(a, b) <= getRaio(a) + getRaio(b);
+  }
 
-			@Override
-			public int getY() {
-				return 0;
-			}
+  /**
+   * Adiciona um item a lista para ser usado na virificaï¿½ï¿½o de colisï¿½o, Para que seja verificada a
+   * colisï¿½o ï¿½ preciso que os objetos tenham sua propiedade isSolid esteja com o valor true.
+   * 
+   */
+  public void add(Colidivel c) {
+    getLista().add(c);
+  }
 
-			@Override
-			public boolean isSolid() {
-				return false;
-			}
-		};
-		Colidivel b = new Colidivel(){
+  /**
+   * Retorna a lista de todos os objetos adicionados para a verificaï¿½ï¿½o de colisï¿½o.
+   * 
+   * @return
+   */
+  public ArrayList<Colidivel> getLista() {
+    if (lista == null) {
+      lista = new ArrayList<Colidivel>();
+    }
+    return lista;
+  }
 
-			@Override
-			public void colidiu(Colidivel c) {
-			}
+  /**
+   * Mï¿½todo implementado apenas para verificaï¿½ï¿½o de funcionalidade de forma local.
+   * 
+   * @param args
+   */
+  public static void main(String[] args) {
+    ColisionCenter c = new ColisionCenter();
+    Colidivel a = new Colidivel() {
 
-			@Override
-			public int getHeight() {
-				return 10;
-			}
+      @Override
+      public void colidiu(Colidivel c) {}
 
-			@Override
-			public int getRaio() {
-				return 5;
-			}
+      @Override
+      public int getHeight() {
+        return 10;
+      }
 
-			@Override
-			public int getWidth() {
-				return 10;
-			}
+      @Override
+      public int getRaio() {
+        return 5;
+      }
 
-			@Override
-			public int getX() {
-				return 20;
-			}
+      @Override
+      public int getWidth() {
+        return 10;
+      }
 
-			@Override
-			public int getY() {
-				return 0;
-			}
+      @Override
+      public int getX() {
+        return 0;
+      }
 
-			@Override
-			public boolean isSolid() {
-				return true;
-			}
-			
-		};
-		System.out.println(c.getDistancia(a, b));
-		System.out.println("Colidindo : " + c.colidindo(a, b) );
-	}
+      @Override
+      public int getY() {
+        return 0;
+      }
+
+      @Override
+      public boolean isSolid() {
+        return false;
+      }
+    };
+    Colidivel b = new Colidivel() {
+
+      @Override
+      public void colidiu(Colidivel c) {}
+
+      @Override
+      public int getHeight() {
+        return 10;
+      }
+
+      @Override
+      public int getRaio() {
+        return 5;
+      }
+
+      @Override
+      public int getWidth() {
+        return 10;
+      }
+
+      @Override
+      public int getX() {
+        return 20;
+      }
+
+      @Override
+      public int getY() {
+        return 0;
+      }
+
+      @Override
+      public boolean isSolid() {
+        return true;
+      }
+
+    };
+    System.out.println(c.getDistancia(a, b));
+    System.out.println("Colidindo : " + c.colidindo(a, b));
+  }
 }

@@ -16,10 +16,10 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   private boolean isPaused = false;
   protected Vetor gravidade;
   private long timer = 0;
-  private Vector<Printable> lista;// Lista de sprites que ser�o pintados na tela
+  private Vector<Printable> lista;// Lista de sprites que ser�o pintados na
+  // tela
   protected CenarioListener cenarioListener;
   private Vector<Updateable> updateables = new Vector<Updateable>();
-
 
   private GameTicker gameTicker = new GameTicker();
 
@@ -38,7 +38,7 @@ public class Cenario extends JPanel implements Runnable, Updateable {
     super(true);// Diz ao JPanel que ele ir� trabalhar com double Buffer
     gameTicker.add(this);
     this.setIgnoreRepaint(true);// ignora solicita��es de repaint do systema
-                                // operacinal
+    // operacinal
     lista = new Vector<Printable>();// Inicializa��o da lista
     cenarioListener = c;
     controle = new Thread(this);
@@ -58,20 +58,20 @@ public class Cenario extends JPanel implements Runnable, Updateable {
       return;
     }
     if (imgFundo != null) {// Verifica se a imagem foi passada. Para evitar
-                           // erros
+      // erros
       g.drawImage(imgFundo, 0, 0, null);// Ele desenha a imagem na tela.
-                                        // g.drawImage(imagem, x-tela, y-tela,
-                                        // largura-tela, altura-tela, x-imagem,
-                                        // y-imagem, largura-imagem,
-                                        // altura-imagem, notifica��o)
+      // g.drawImage(imagem, x-tela,
+      // y-tela,
+      // largura-tela, altura-tela,
+      // x-imagem,
+      // y-imagem, largura-imagem,
+      // altura-imagem, notifica��o)
     }
     for (Printable p : lista) { // Varredura da lista
       p.paint(g);
     }
 
-
   }
-
 
   public void setImgFundo(Image img) {
     this.imgFundo = img;
@@ -108,6 +108,7 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   }
 
   public synchronized void keyDown(byte tecla) {
+    System.out.println("Key pressed: " + tecla);
     for (Printable p : lista) {
       if (p instanceof Sprite)
         ((Sprite) (p)).keyDown(tecla);
@@ -122,11 +123,10 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   }
 
   /**
-   * Distribui um ataque para todos os objetos Sprites da fase se estejam
-   * situados na �rea delimitada pelas cordenadas informadas no par�metro.
+   * Distribui um ataque para todos os objetos Sprites da fase se estejam situados na �rea
+   * delimitada pelas cordenadas informadas no par�metro.
    * 
-   * @param m Objeto do tipo Moveble o qual disparaou o evento e n�o ser�
-   *        afetado.
+   * @param m Objeto do tipo Moveble o qual disparaou o evento e n�o ser� afetado.
    * @param intencidade informa o n�vel do ataque.
    * @param x inicio a �rea a ser afetada pelo ataque.
    * @param y inicio superior da �rea a ser afetada pelo ataque.
@@ -150,8 +150,8 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   }
 
   /**
-   * Adiciona um item do tipo Colidivel para ser verificado e notificado quando
-   * estiver em estado de colis�o.
+   * Adiciona um item do tipo Colidivel para ser verificado e notificado quando estiver em estado de
+   * colis�o.
    * 
    * @param c Objeto do tipo Colidivel
    */

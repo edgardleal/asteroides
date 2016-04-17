@@ -4,57 +4,57 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class NaveTest extends TestCase{
-	GhostSprite nave;
-	long tempo_para_deslocamento = 1000l;
-	int posicao_inicial = 200,posicao_final = 140;
-	
-	private void start() {
-		nave  = new GhostSprite(null);
-		nave.addQuadro(1, 1, 10, 10);
-		nave.setWidth(30);
-		nave.setHeight(30);
-		
-		nave.setPasso(1.5);
-		nave.vDireita.setXY(.2, 0);
-		nave.atrito.setRaio(0.002);
-		nave.vEsquerda.setXY(-0.2d, 0);
-		nave.aceleracao.setRaioLimite(8);
-		nave.aceleracao.setXY(.0, .0);
-	}
-	
-	private void end() {
-		nave = null;
-	}
-	
-	@Test
-	public void testDireita() {
-		start();
-		System.out.println("Localização antes de mover: " + nave.getLeft());
-		System.out.println("Antes de mover para a direita: " + nave.aceleracao);
-		nave.direita();
-		try {
-			Thread.sleep(tempo_para_deslocamento);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		System.out.println("Após mover para a direira: " + nave.aceleracao);
-		System.out.println("Localização após a movimentação: " + nave.getLeft());
-		assertEquals(posicao_final, nave.getLeft()+120L);
-		end();
-	}
+public class NaveTest extends TestCase {
+  GhostSprite nave;
+  long tempo_para_deslocamento = 1000l;
+  int posicao_inicial = 200, posicao_final = 140;
 
-	@Test
-	public void testEsquerda() {
-		start();
-		nave.esquerda();
-		assertEquals(posicao_final, nave.getLeft());
-		end();
-	}
-	
-	public static void main(String[] args) {
-		NaveTest teste = new NaveTest();
-		teste.testDireita();
-	}
+  private void start() {
+    nave = new GhostSprite(null);
+    nave.addQuadro(1, 1, 10, 10);
+    nave.setWidth(30);
+    nave.setHeight(30);
+
+    nave.setPasso(1.5);
+    nave.vDireita.setXY(.2, 0);
+    nave.atrito.setRaio(0.002);
+    nave.vEsquerda.setXY(-0.2d, 0);
+    nave.aceleracao.setRaioLimite(8);
+    nave.aceleracao.setXY(.0, .0);
+  }
+
+  private void end() {
+    nave = null;
+  }
+
+  @Test
+  public void testDireita() {
+    start();
+    System.out.println("Localizaï¿½ï¿½o antes de mover: " + nave.getLeft());
+    System.out.println("Antes de mover para a direita: " + nave.aceleracao);
+    nave.direita();
+    try {
+      Thread.sleep(tempo_para_deslocamento);
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+    System.out.println("Apï¿½s mover para a direira: " + nave.aceleracao);
+    System.out.println("Localizaï¿½ï¿½o apï¿½s a movimentaï¿½ï¿½o: " + nave.getLeft());
+    assertEquals(posicao_final, nave.getLeft() + 120L);
+    end();
+  }
+
+  @Test
+  public void testEsquerda() {
+    start();
+    nave.esquerda();
+    assertEquals(posicao_final, nave.getLeft());
+    end();
+  }
+
+  public static void main(String[] args) {
+    NaveTest teste = new NaveTest();
+    teste.testDireita();
+  }
 
 }
