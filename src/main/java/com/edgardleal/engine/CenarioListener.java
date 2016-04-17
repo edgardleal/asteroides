@@ -10,6 +10,7 @@ package com.edgardleal.engine;
  * 
  * @author edgard.leal
  * @since 04/08/2011
+ * @version $Revision: 1.0 $
  */
 public interface CenarioListener {
   /**
@@ -17,7 +18,8 @@ public interface CenarioListener {
    * exibido.
    * 
    * @param sender
-   * @return
+  
+   * @return int
    */
   public int fim(Cenario sender);
 }

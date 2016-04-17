@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import javax.swing.JApplet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.Colidivel;
 import com.edgardleal.engine.Sprite;
@@ -16,6 +19,8 @@ import com.edgardleal.engine.Vetor;
 import com.edgardleal.telas.Fase01;
 
 public class Nave extends Sprite {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Nave.class);
   private boolean atirando = false;
   private Missil missil;
   private ArrayList<Missil> misseis;
@@ -30,13 +35,19 @@ public class Nave extends Sprite {
   // private Cenario cenario; pode ser utilizado posteriormente para tratamento
   // de explos�es
 
+  /**
+   * Constructor for Nave.
+   * 
+   * @param a JApplet
+   * @param c Cenario
+   * @throws MalformedURLException
+   */
   public Nave(JApplet a, Cenario c) throws MalformedURLException {
     super(a.getImage(new URL(a.getDocumentBase(), "img/nave2.png")));
-    System.out.println(new File(".").getAbsolutePath());
+    LOGGER.debug(new File(".").getAbsolutePath());
     if (!new File("img/nave2.png").exists()) {
       throw new RuntimeException("O arquivo nao foi encontrado");
     }
-    System.out.println(new URL(a.getDocumentBase(), "img/nave2.png"));
     addQuadro(10, 0, 42, 40);
     addQuadro(10, 50, 41, 90);
     addQuadro(9, 100, 41, 140);
@@ -86,6 +97,7 @@ public class Nave extends Sprite {
   /**
    * Anula a gravidade.
    * 
+   * @param gravidade Vetor
    */
   @Override
   public void mover(Vetor gravidade) {
@@ -105,10 +117,20 @@ public class Nave extends Sprite {
     super.mover();
   }
 
+  /**
+   * Method keyDown.
+   * 
+   * @param tecla byte
+   */
   public void keyDown(byte tecla) {
     super.keyDown(tecla);
   }
 
+  /**
+   * Method getMisseis.
+   * 
+   * @return ArrayList<Missil>
+   */
   public ArrayList<Missil> getMisseis() {
     if (misseis == null) {
       misseis = new ArrayList<Missil>();
@@ -123,6 +145,12 @@ public class Nave extends Sprite {
     return misseis;
   }
 
+  /**
+   * Method update.
+   * 
+   * @param lista ArrayList<Colidivel>
+   * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
+   */
   @Override
   public synchronized void update(ArrayList<Colidivel> lista) {
 
@@ -144,6 +172,12 @@ public class Nave extends Sprite {
     nextFrame();// muda para o proximo quadro
   }
 
+  /**
+   * Method paint.
+   * 
+   * @param g Graphics
+   * @see com.edgardleal.engine.Printable#paint(Graphics)
+   */
   @Override
   public void paint(Graphics g) {
     timerDeLancamento = timerDeLancamento > 0 ? --timerDeLancamento : 0;

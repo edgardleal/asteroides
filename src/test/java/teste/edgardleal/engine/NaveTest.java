@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+/**
+ */
 public class NaveTest extends TestCase {
   GhostSprite nave;
   long tempo_para_deslocamento = 1000l;
@@ -52,6 +54,10 @@ public class NaveTest extends TestCase {
     end();
   }
 
+  /**
+   * Method main.
+   * @param args String[]
+   */
   public static void main(String[] args) {
     NaveTest teste = new NaveTest();
     teste.testDireita();

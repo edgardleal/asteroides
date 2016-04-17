@@ -10,11 +10,18 @@ import java.text.DecimalFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 
+/**
+ */
 public class Vetor {
   private double x = 1, y = 1;
   private double direcao = 0, raio = 0;
   private double raioLimite = 0;
 
+  /**
+   * Constructor for Vetor.
+   * @param x double
+   * @param y double
+   */
   public Vetor(double x, double y) {
     setXY(x, y);
   }
@@ -23,6 +30,11 @@ public class Vetor {
     setXY(0, 0);
   }
 
+  /**
+   * Method produtoInterno.
+   * @param v Vetor
+   * @return double
+   */
   public double produtoInterno(Vetor v) {
     return (v.getX() * x) + (v.getY() * y);
   }
@@ -31,7 +43,8 @@ public class Vetor {
    * retorna o produto externo entre este e outro vetor.
    * 
    * @param v
-   * @return
+  
+   * @return Vetor
    */
   public Vetor produtoExterno(Vetor v) {
     /*
@@ -43,12 +56,21 @@ public class Vetor {
     return new Vetor(y - x, v.getX() - v.getY());
   }
 
+  /**
+   * Method toString.
+   * @return String
+   */
   public String toString() {
     return "X:" + getX() + " , Y:" + getY() + " Raio:" + getRaio() + " �ngulo : " + getDirecao()
         * (180 / Math.PI);
   }
 
 
+  /**
+   * Method somar.
+   * @param x double
+   * @param y double
+   */
   public void somar(double x, double y) {
     if (raioLimite != 0 && calcModulo(x, y) + getModulo() > raioLimite)
       return;
@@ -58,14 +80,29 @@ public class Vetor {
     calcDirecao();
   }
 
+  /**
+   * Method calcModulo.
+   * @param x double
+   * @param y double
+   * @return double
+   */
   private double calcModulo(double x, double y) {
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
   }
 
+  /**
+   * Method somar.
+   * @param v Vetor
+   */
   public void somar(Vetor v) {
     somar(v.getX(), v.getY());
   }
 
+  /**
+   * Method subtrair.
+   * @param x double
+   * @param y double
+   */
   public void subtrair(double x, double y) {
     this.x -= x;
     this.y -= y;
@@ -80,11 +117,11 @@ public class Vetor {
    * @param v
    */
   public void subtrair(Vetor v) {
-    double raio_anterior = v.getRaio();
-    if (raio_anterior > raio)
+    double raioAnterior = v.getRaio();
+    if (raioAnterior > raio)
       v.setRaio(raio);
     subtrair(v.getX(), v.getY());
-    v.setRaio(raio_anterior);// devolve o valor original para o objeto par�metro
+    v.setRaio(raioAnterior);// devolve o valor original para o objeto par�metro
   }
 
   /**
@@ -109,6 +146,11 @@ public class Vetor {
   }
 
 
+  /**
+   * Method setXY.
+   * @param x double
+   * @param y double
+   */
   public void setXY(double x, double y) {
     this.x = x;
     this.y = y;
@@ -116,24 +158,44 @@ public class Vetor {
     calcRaio();
   }
 
+  /**
+   * Method setRaio.
+   * @param raio double
+   */
   public void setRaio(double raio) {
     this.raio = raio;
     calcXY();
   }
 
+  /**
+   * Method setX.
+   * @param x double
+   */
   public void setX(double x) {
     setXY(x, this.y);
   }
 
+  /**
+   * Method setY.
+   * @param y double
+   */
   public void setY(double y) {
     setXY(this.x, y);
   }
 
+  /**
+   * Method getRaio.
+   * @return double
+   */
   public double getRaio() {
     raio = raio == Double.NaN ? 0 : raio;
     return raio;
   }
 
+  /**
+   * Method getX.
+   * @return double
+   */
   public double getX() {
     return x;
   }
@@ -142,7 +204,8 @@ public class Vetor {
    * Retorna o valor da posição X para o raio informado de acordo ângulo atual.
    * 
    * @param r
-   * @return
+  
+   * @return int
    */
   public int getXParaORaio(double r) {
     return round(Math.cos(getDirecao()) * r);
@@ -152,12 +215,17 @@ public class Vetor {
    * Função para arredondamento(Encapsulamento do cast (int)2.5 ).
    * 
    * @param v
-   * @return
+  
+   * @return int
    */
   private int round(double v) {
     return (int) v;
   }
 
+  /**
+   * Method getY.
+   * @return double
+   */
   public double getY() {
     return y;
   }
@@ -165,7 +233,8 @@ public class Vetor {
   /**
    * Retorna a direção do vetor em Radianos.
    * 
-   * @return
+  
+   * @return double
    */
   public double getDirecao() {
     direcao = direcao == Double.NaN ? 0 : direcao;
@@ -173,6 +242,10 @@ public class Vetor {
   }
 
 
+  /**
+   * Method multiplicar.
+   * @param v double
+   */
   public void multiplicar(double v) {
     x = v * x;
     y = v * y;
@@ -194,6 +267,10 @@ public class Vetor {
     setDirecao(direcao);// para atualização dos calculos necessários
   }
 
+  /**
+   * Method getModulo.
+   * @return double
+   */
   public double getModulo() {
     return raio;
   }
@@ -214,14 +291,26 @@ public class Vetor {
     y = Math.sin(direcao) * raio;
   }
 
+  /**
+   * Method paint.
+   * @param g java.awt.Graphics
+   */
   public void paint(java.awt.Graphics g) {
     g.drawLine(100, 100, 100 + (int) x, 100 + (int) y);
   }
 
+  /**
+   * Method setRaioLimite.
+   * @param l double
+   */
   public void setRaioLimite(double l) {
     raioLimite = l;
   }
 
+  /**
+   * Method main.
+   * @param args String[]
+   */
   public static void main(String[] args) {
     Vetor v = new Vetor(20, -20), // teste de mudan�a de dire��o
     b = new Vetor(20, 20);
@@ -243,6 +332,8 @@ public class Vetor {
 }
 
 
+/**
+ */
 class Tela extends JDialog {
   /**
 	 * 
@@ -250,6 +341,10 @@ class Tela extends JDialog {
   private static final long serialVersionUID = -382822471525634591L;
   private Vetor v;
 
+  /**
+   * Constructor for Tela.
+   * @param v Vetor
+   */
   public Tela(Vetor v) {
     this.v = v;
     setSize(400, 400);
@@ -267,6 +362,10 @@ class Tela extends JDialog {
     setModal(true);
   }
 
+  /**
+   * Method paint.
+   * @param g java.awt.Graphics
+   */
   @Override
   public void paint(java.awt.Graphics g) {
     DecimalFormat formato = new DecimalFormat("0.0");

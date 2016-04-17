@@ -9,6 +9,12 @@ import com.edgardleal.engine.Sprite;
 
 public class Mosquito extends Sprite {
 
+  /**
+   * Constructor for Mosquito.
+   * @param applet JApplet
+   * @param c Cenario
+   * @throws Exception
+   */
   public Mosquito(JApplet applet, Cenario c) throws Exception {
     super(applet.getImage(new URL(applet.getDocumentBase(), "img/mosquito.png")));
 
@@ -38,6 +44,11 @@ public class Mosquito extends Sprite {
     setLife(100);
   }
 
+  /**
+   * Method paint.
+   * @param g java.awt.Graphics
+   * @see com.edgardleal.engine.Printable#paint(java.awt.Graphics)
+   */
   @Override
   public void paint(java.awt.Graphics g) {
     super.paint(g);
@@ -51,6 +62,11 @@ public class Mosquito extends Sprite {
   }
 
 
+  /**
+   * Method ataque.
+   * @param intencidade int
+   * @return boolean
+   */
   @Override
   public boolean ataque(int intencidade) {
     super.ataque(intencidade);

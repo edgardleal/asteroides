@@ -14,6 +14,8 @@ import javax.swing.JApplet;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 
+/**
+ */
 public class MediaCenter implements Runnable {
   private MediaTracker tracker;
   private JApplet applet;
@@ -25,15 +27,28 @@ public class MediaCenter implements Runnable {
   private Vector<String> listaTemporaria = new Vector<String>();
   private Vector<String> listaURLSounds = new Vector<String>();
 
+  /**
+   * Constructor for MediaCenter.
+   * @param applet JApplet
+   */
   public MediaCenter(JApplet applet) {
     this.applet = applet;
-    controle = new Thread(this);
+    controle = new Thread(this, getClass().getSimpleName());
   }
 
+  /**
+   * Method add.
+   * @param image String
+   */
   public void add(String image) {
     listaTemporaria.add(image);
   }
 
+  /**
+   * Method add.
+   * @param chave String
+   * @param image Image
+   */
   private void add(String chave, Image image) {
     getTracker().addImage(image, getImages().size());
     getImages().put(chave, image);
@@ -53,6 +68,10 @@ public class MediaCenter implements Runnable {
     getJanela().setVisible(true);
   }
 
+  /**
+   * Method getJanela.
+   * @return JDialog
+   */
   public JDialog getJanela() {
     if (janela == null) {
       janela = new JDialog();
@@ -71,6 +90,10 @@ public class MediaCenter implements Runnable {
     return janela;
   }
 
+  /**
+   * Method getProgressBar.
+   * @return JProgressBar
+   */
   public JProgressBar getProgressBar() {
     if (progressBar == null) {
       progressBar = new JProgressBar();
@@ -86,7 +109,8 @@ public class MediaCenter implements Runnable {
    * informado , retorna null.
    * 
    * @param nome
-   * @return
+  
+   * @return Image
    */
   public Image getImage(String nome) {
     return imagens.get(nome);
@@ -103,12 +127,20 @@ public class MediaCenter implements Runnable {
 
 
   /* GGAS */
+  /**
+   * Method getTracker.
+   * @return MediaTracker
+   */
   public MediaTracker getTracker() {
     if (tracker == null)
       tracker = new MediaTracker(applet);
     return tracker;
   }
 
+  /**
+   * Method getImages.
+   * @return HashMap<String,Image>
+   */
   public HashMap<String, Image> getImages() {
     if (imagens == null) {
       imagens = new HashMap<String, Image>();
@@ -116,6 +148,10 @@ public class MediaCenter implements Runnable {
     return imagens;
   }
 
+  /**
+   * Method run.
+   * @see java.lang.Runnable#run()
+   */
   @Override
   public void run() {
     boolean erro = false;
@@ -128,20 +164,20 @@ public class MediaCenter implements Runnable {
       erro = true; /* Silenciador */
     }
 
-    int total_ok = 0;
+    int totalOk = 0;
     while (!getTracker().checkAll()) {
-      total_ok = 0;
+      totalOk = 0;
       for (int i = 0; i < getImages().size(); i++) {
-        total_ok += getTracker().checkID(i) ? 1 : 0;
+        totalOk += getTracker().checkID(i) ? 1 : 0;
       }
 
       // getProgressBar().setValue(total_ok);
-      if (total_ok == getImages().size() || erro)
+      if (totalOk == getImages().size() || erro)
         break;
 
       try {
         Thread.sleep(100);
-        System.out.println("Itens checkados " + total_ok + " , total de itens "
+        System.out.println("Itens checkados " + totalOk + " , total de itens "
             + getImages().size());
       } catch (Exception e) {
         // Sinlenciador da exce��o
@@ -152,6 +188,10 @@ public class MediaCenter implements Runnable {
     System.out.println("Fim da Thread");
   }// run
 
+  /**
+   * Method carregarSons.
+   * @return boolean
+   */
   private boolean carregarSons() {
     try {
       for (int i = 0; i < listaURLSounds.size(); i++) {
@@ -173,6 +213,10 @@ public class MediaCenter implements Runnable {
     listaURLSounds.add(arquivo);
   }
 
+  /**
+   * Method getSounds.
+   * @return HashMap<String,AudioClip>
+   */
   public HashMap<String, AudioClip> getSounds() {
     if (sounds == null) {
       sounds = new HashMap<String, AudioClip>();
@@ -180,6 +224,11 @@ public class MediaCenter implements Runnable {
     return sounds;
   }
 
+  /**
+   * Method getSound.
+   * @param chave String
+   * @return AudioClip
+   */
   public AudioClip getSound(String chave) {
     return getSound(chave);
   }

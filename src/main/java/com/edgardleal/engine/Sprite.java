@@ -10,6 +10,8 @@ import com.edgardleal.engine.animation.FrameListener;
 import com.edgardleal.engine.animation.TimeLine;
 
 
+/**
+ */
 public class Sprite extends Movable implements Printable, Updateable, FrameListener {
   private Image img;
   private boolean visible = true, mostraLife = true;
@@ -19,10 +21,19 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
   protected boolean teclas[] = new boolean[90];
   private long time = 0;
 
+  /**
+   * Constructor for Sprite.
+   * @param img Image
+   */
   public Sprite(Image img) {
     this.img = img;
   }
 
+  /**
+   * Method paint.
+   * @param g Graphics
+   * @see com.edgardleal.engine.Printable#paint(Graphics)
+   */
   @Override
   public void paint(Graphics g) {
     if (!visible)
@@ -40,28 +51,55 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
     }
   }
 
+  /**
+   * Method addQuadro.
+   * @param x1 int
+   * @param y1 int
+   * @param x2 int
+   * @param y2 int
+   */
   public void addQuadro(int x1, int y1, int x2, int y2) {
     timeLine.add(x1, y1, x2, y2);
   }
 
+  /**
+   * Method notifyTecla.
+   * @param tecla byte
+   */
   public synchronized void notifyTecla(byte tecla) {
     this.tecla = tecla;
   }
 
+  /**
+   * Method keyDown.
+   * @param tecla byte
+   */
   public void keyDown(byte tecla) {
     this.tecla = tecla;
     teclas[tecla] = true;
   }
 
+  /**
+   * Method keyUp.
+   * @param tecla byte
+   */
   public void keyUp(byte tecla) {
     this.tecla = tecla;
     teclas[tecla] = false;
   }
 
+  /**
+   * Method isVisible.
+   * @return boolean
+   */
   public boolean isVisible() {
     return visible;
   }
 
+  /**
+   * Method setVisible.
+   * @param visible boolean
+   */
   public void setVisible(boolean visible) {
     this.visible = visible;
 
@@ -72,6 +110,10 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
     onFrameChange(timeLine.getCurrentFrame());
   }
 
+  /**
+   * Method getTime.
+   * @return long
+   */
   public long getTime() {
     return time;
   }
@@ -83,27 +125,53 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
   /*
    * public int getQuadrosCount(){ return timeLine.getSize(); }
    */
+  /**
+   * Method getLife.
+   * @return int
+   */
   public int getLife() {
     return life;
   }
 
+  /**
+   * Method getResistencia.
+   * @return int
+   */
   public int getResistencia() {
     return resistencia;
   }
 
+  /**
+   * Method ataque.
+   * @param intencidade int
+   * @return boolean
+   */
   public boolean ataque(int intencidade) {
     life -= life < intencidade ? intencidade + life - intencidade : intencidade;
     return life <= 0;
   }
 
+  /**
+   * Method setLife.
+   * @param life int
+   */
   public void setLife(int life) {
     this.life = life;
   }
 
+  /**
+   * Method setExibeLife.
+   * @param value boolean
+   */
   public void setExibeLife(boolean value) {
     mostraLife = value;
   }
 
+  /**
+   * Method update.
+   * @param lista ArrayList<Colidivel>
+   * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
+   */
   @Override
   public synchronized void update(ArrayList<Colidivel> lista) {
     nextFrame();
@@ -113,7 +181,8 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
   /**
    * Retorna o timeline de anima��o deste sprite.
    * 
-   * @return
+  
+   * @return TimeLine
    */
   public TimeLine getTimeline() {
     return timeLine;
@@ -129,17 +198,31 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
 
   }
 
+  /**
+   * Method onFrameEnd.
+   * @param frame int
+   * @see com.edgardleal.engine.animation.FrameListener#onFrameEnd(int)
+   */
   @Override
   public void onFrameEnd(int frame) {
     // TODO Auto-generated method stub
 
   }
 
+  /**
+   * Method onFrameStart.
+   * @param frame int
+   * @see com.edgardleal.engine.animation.FrameListener#onFrameStart(int)
+   */
   @Override
   public void onFrameStart(int frame) {
     // TODO Auto-generated method stub
   }
 
+  /**
+   * Method rotate.
+   * @param g Graphics
+   */
   public void rotate(Graphics g) {
     // Graphics2D g2 = (Graphics2D)g.create();
     // Graphics2D g2d = g2.create();
@@ -152,6 +235,13 @@ public class Sprite extends Movable implements Printable, Updateable, FrameListe
     // aceleracao.getDirecao();
   }
 
+  /**
+   * Method setBounds.
+   * @param x int
+   * @param y int
+   * @param w int
+   * @param h int
+   */
   public void setBounds(int x, int y, int w, int h) {
     setX2(x + w);
     setY2(h + y);

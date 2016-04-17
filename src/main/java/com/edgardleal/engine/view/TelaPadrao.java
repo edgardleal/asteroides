@@ -10,6 +10,8 @@ import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.GameTicker;
 
+/**
+ */
 public class TelaPadrao extends JFrame implements KeyListener, CenarioListener {
 
   /**
@@ -28,18 +30,33 @@ public class TelaPadrao extends JFrame implements KeyListener, CenarioListener {
 
 
 
+  /**
+   * Method keyPressed.
+   * @param k KeyEvent
+   * @see java.awt.event.KeyListener#keyPressed(KeyEvent)
+   */
   @Override
   public void keyPressed(KeyEvent k) {
     if (k.getKeyChar() == 27)
       System.exit(0);
   }
 
+  /**
+   * Method keyReleased.
+   * @param k KeyEvent
+   * @see java.awt.event.KeyListener#keyReleased(KeyEvent)
+   */
   @Override
   public void keyReleased(KeyEvent k) {
     // TODO Auto-generated method stub
 
   }
 
+  /**
+   * Method keyTyped.
+   * @param k KeyEvent
+   * @see java.awt.event.KeyListener#keyTyped(KeyEvent)
+   */
   @Override
   public void keyTyped(KeyEvent k) {
     // TODO Auto-generated method stub
@@ -48,12 +65,22 @@ public class TelaPadrao extends JFrame implements KeyListener, CenarioListener {
 
 
 
+  /**
+   * Method fim.
+   * @param sender Cenario
+   * @return int
+   * @see com.edgardleal.engine.CenarioListener#fim(Cenario)
+   */
   @Override
   public int fim(Cenario sender) {
     // TODO Auto-generated method stub
     return 0;
   }
 
+  /**
+   * Method setFase.
+   * @param fase Cenario
+   */
   public void setFase(Cenario fase) {
     this.setContentPane(fase);
   }

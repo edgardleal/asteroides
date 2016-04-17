@@ -1,5 +1,7 @@
 package com.edgardleal.engine.math;
 
+/**
+ */
 public class Math {
 
   public Math() {

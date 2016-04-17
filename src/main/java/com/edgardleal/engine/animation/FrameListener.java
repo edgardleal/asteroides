@@ -6,9 +6,18 @@ package com.edgardleal.engine.animation;
  * 
  * @author Edgard
  *
+ * @version $Revision: 1.0 $
  */
 public interface FrameListener {
+  /**
+   * Method onFrameStart.
+   * @param frame int
+   */
   public void onFrameStart(int frame);
 
+  /**
+   * Method onFrameEnd.
+   * @param frame int
+   */
   public void onFrameEnd(int frame);
 }

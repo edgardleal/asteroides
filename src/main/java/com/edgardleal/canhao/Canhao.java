@@ -6,6 +6,8 @@ import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.Sprite;
 import com.edgardleal.engine.Vetor;
 
+/**
+ */
 public class Canhao extends Sprite {
   Bala balas[] = new Bala[10];
   /**
@@ -14,6 +16,10 @@ public class Canhao extends Sprite {
   private static final long serialVersionUID = -4182748336163526433L;
   private Cenario cenario;
 
+  /**
+   * Constructor for Canhao.
+   * @param c Cenario
+   */
   public Canhao(Cenario c) {
     super(Toolkit.getDefaultToolkit().getImage("img\\Cannon2.png"));
     this.cenario = c;
@@ -29,11 +35,19 @@ public class Canhao extends Sprite {
     this.setBounds(400, 400, 50, 55);
   }
 
+  /**
+   * Method mover.
+   * @param gravidade Vetor
+   */
   @Override
   public void mover(Vetor gravidade) {
 
   }
 
+  /**
+   * Method onFrameChange.
+   * @param frame int
+   */
   @Override
   public void onFrameChange(int frame) {
     if (frame == 4) {
@@ -49,6 +63,10 @@ public class Canhao extends Sprite {
     }
   }
 
+  /**
+   * Method getBala.
+   * @return Bala
+   */
   public Bala getBala() {
     // System.out.println("Balas no canh�o : " + balas.length);
     for (int i = 0; i < balas.length; i++) {
