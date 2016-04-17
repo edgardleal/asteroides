@@ -2,9 +2,6 @@ package com.edgardleal.telas;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.net.URL;
-
-import javax.swing.JApplet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +10,9 @@ import com.edgardleal.asteroide.Asteroide;
 import com.edgardleal.asteroide.Missil;
 import com.edgardleal.asteroide.Nave;
 import com.edgardleal.engine.Cenario;
+import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.Colidivel;
+import com.edgardleal.engine.MediaCenter;
 import com.edgardleal.engine.Movable;
 import com.edgardleal.engine.Printable;
 import com.edgardleal.engine.Sprite;
@@ -33,18 +32,18 @@ public class Fase01 extends Cenario {
    * 
    * @param applet JApplet
    */
-  public Fase01(JApplet applet) {
-    super(null);
+  public Fase01(CenarioListener listener) {
+    super(listener);
     try {
-      nave = new Nave(applet, this);
+      nave = new Nave(this);
       addPrintable(nave);// diciona a nave na lista de objetos da fase
       for (int i = 0; i < 10; i++) {
-        addPrintable(new Asteroide(applet, this));
+        addPrintable(new Asteroide(this));
       }
 
       // addPrintable(new Mosquito(applet, this));
 
-      imgFundo = applet.getImage(new URL(applet.getDocumentBase(), "img/fundo ok.jpg"));
+      imgFundo = MediaCenter.instance().getImage("img/fundo ok.jpg");
       setImgFundo(imgFundo);
       setBounds(0, 0, 500, 500);
 

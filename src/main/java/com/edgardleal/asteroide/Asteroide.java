@@ -1,12 +1,10 @@
 package com.edgardleal.asteroide;
 
-import java.net.URL;
 import java.util.ArrayList;
-
-import javax.swing.JApplet;
 
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.Colidivel;
+import com.edgardleal.engine.MediaCenter;
 import com.edgardleal.engine.Sprite;
 import com.edgardleal.telas.Fase01;
 
@@ -21,8 +19,8 @@ public class Asteroide extends Sprite {
   private int id = -1;
   private Cenario c = null;
 
-  public Asteroide(JApplet applet, Cenario c) throws Exception {
-    super(applet.getImage(new URL(applet.getDocumentBase(), "img/enemy1.png")));
+  public Asteroide(Cenario c) throws Exception {
+    super(MediaCenter.instance().getImage("img/enemy1.png"));
     this.id = ++count;
     getTimeline().add(0, 1, 32, 31, 0, 5); // 0
     getTimeline().add(32, 1, 32 + 32, 31, 2, 5); // 1

@@ -6,38 +6,64 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Vector;
 
-import javax.swing.JApplet;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
+ * 
+ * @author edgardleal
+ *
  */
 public class MediaCenter implements Runnable {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(MediaCenter.class);
   private MediaTracker tracker;
-  private JApplet applet;
   private HashMap<String, Image> imagens;
-  private HashMap<String, AudioClip> sounds;
+  private HashMap<String, Clip> sounds;
   private JProgressBar progressBar;
   private Thread controle;
   private JDialog janela;
   private Vector<String> listaTemporaria = new Vector<String>();
   private Vector<String> listaURLSounds = new Vector<String>();
 
+
+  private static MediaCenter innerInstance;
+
   /**
    * Constructor for MediaCenter.
+   * 
    * @param applet JApplet
    */
-  public MediaCenter(JApplet applet) {
-    this.applet = applet;
+  private MediaCenter() {
     controle = new Thread(this, getClass().getSimpleName());
+    imagens = new HashMap<>();
+    sounds = new HashMap<String, Clip>();
+  }
+
+  public static MediaCenter instance() {
+    if (innerInstance == null) {
+      innerInstance = new MediaCenter();
+    }
+    return innerInstance;
   }
 
   /**
    * Method add.
+   * 
    * @param image String
    */
   public void add(String image) {
@@ -46,6 +72,7 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method add.
+   * 
    * @param chave String
    * @param image Image
    */
@@ -53,7 +80,7 @@ public class MediaCenter implements Runnable {
     getTracker().addImage(image, getImages().size());
     getImages().put(chave, image);
     getProgressBar().setMaximum(getImages().size());
-    System.out.println("add Imagem : " + chave);
+    LOGGER.debug("add Imagem : ", chave);
   }
 
   public void start() {
@@ -70,6 +97,7 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method getJanela.
+   * 
    * @return JDialog
    */
   public JDialog getJanela() {
@@ -92,6 +120,7 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method getProgressBar.
+   * 
    * @return JProgressBar
    */
   public JProgressBar getProgressBar() {
@@ -109,36 +138,46 @@ public class MediaCenter implements Runnable {
    * informado , retorna null.
    * 
    * @param nome
-  
+   * 
    * @return Image
    */
   public Image getImage(String nome) {
-    return imagens.get(nome);
+
+    Image image = imagens.get(nome);
+    if (image == null) {
+      try {
+        image = ImageIO.read(ClassLoader.getSystemResource(nome));
+      } catch (IOException e) {
+        LOGGER.debug("Erro ao carregar a imagem", e);
+      }
+    }
+    return image;
   }
 
   /**
    * @param args
    */
   public static void main(String[] args) {
-    MediaCenter midias = new MediaCenter(null);
+    MediaCenter midias = new MediaCenter();
     midias.showProgress();
-
   }
 
 
   /* GGAS */
   /**
    * Method getTracker.
+   * 
    * @return MediaTracker
    */
   public MediaTracker getTracker() {
     if (tracker == null)
-      tracker = new MediaTracker(applet);
+      tracker = new MediaTracker(null);
     return tracker;
   }
 
   /**
    * Method getImages.
+   * 
    * @return HashMap<String,Image>
    */
   public HashMap<String, Image> getImages() {
@@ -150,17 +189,19 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method run.
+   * 
    * @see java.lang.Runnable#run()
    */
   @Override
   public void run() {
     boolean erro = false;
     try {
-      for (int i = 0; i < listaTemporaria.size(); i++)
-        add(listaTemporaria.get(i),
-            applet.getImage(new URL(applet.getDocumentBase(), listaTemporaria.get(i))));
+      for (int i = 0; i < listaTemporaria.size(); i++) {
+        add(listaTemporaria.get(i), getImage(listaTemporaria.get(i)));
+      }
 
     } catch (Exception ex) {
+      LOGGER.error("Erro ao carregar as imagens", ex);
       erro = true; /* Silenciador */
     }
 
@@ -177,8 +218,8 @@ public class MediaCenter implements Runnable {
 
       try {
         Thread.sleep(100);
-        System.out.println("Itens checkados " + totalOk + " , total de itens "
-            + getImages().size());
+        System.out
+            .println("Itens checkados " + totalOk + " , total de itens " + getImages().size());
       } catch (Exception e) {
         // Sinlenciador da exce��o
       }// try
@@ -190,17 +231,29 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method carregarSons.
+   * 
    * @return boolean
    */
   private boolean carregarSons() {
     try {
       for (int i = 0; i < listaURLSounds.size(); i++) {
-        sounds.put(listaURLSounds.get(i), applet.getAudioClip(new URL(listaURLSounds.get(i))));
+        sounds.put(listaURLSounds.get(i), loadAudioClip(listaURLSounds.get(i)));
       }
       return true;
     } catch (Exception e) {
       return false;
     }
+  }
+
+  private Clip loadAudioClip(final String name) throws LineUnavailableException,
+      UnsupportedAudioFileException, IOException {
+    URL url = this.getClass().getClassLoader().getResource(name);
+    AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+    // Get a sound clip resource.
+    Clip clip = AudioSystem.getClip();
+    // Open audio clip and load samples from the audio input stream.
+    clip.open(audioIn);
+    return clip;
   }
 
   /**
@@ -215,17 +268,19 @@ public class MediaCenter implements Runnable {
 
   /**
    * Method getSounds.
+   * 
    * @return HashMap<String,AudioClip>
    */
-  public HashMap<String, AudioClip> getSounds() {
+  public HashMap<String, Clip> getSounds() {
     if (sounds == null) {
-      sounds = new HashMap<String, AudioClip>();
+      sounds = new HashMap<String, Clip>();
     }
     return sounds;
   }
 
   /**
    * Method getSound.
+   * 
    * @param chave String
    * @return AudioClip
    */

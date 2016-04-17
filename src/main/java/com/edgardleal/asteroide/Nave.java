@@ -2,9 +2,7 @@ package com.edgardleal.asteroide;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JApplet;
@@ -14,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.Colidivel;
+import com.edgardleal.engine.MediaCenter;
 import com.edgardleal.engine.Sprite;
 import com.edgardleal.engine.Vetor;
 import com.edgardleal.telas.Fase01;
@@ -42,24 +41,19 @@ public class Nave extends Sprite {
    * @param c Cenario
    * @throws MalformedURLException
    */
-  public Nave(JApplet a, Cenario c) throws MalformedURLException {
-    super(a.getImage(new URL(a.getDocumentBase(), "img/nave2.png")));
-    LOGGER.debug(new File(".").getAbsolutePath());
-    if (!new File("img/nave2.png").exists()) {
-      throw new RuntimeException("O arquivo nao foi encontrado");
-    }
+  public Nave(Cenario c) throws MalformedURLException {
+    super(MediaCenter.instance().getImage("img/nave2.png"));
     addQuadro(10, 0, 42, 40);
     addQuadro(10, 50, 41, 90);
     addQuadro(9, 100, 41, 140);
     setLocation(250, 400);
     setWidth(24);
     setHeight(32);
-    missil = new Missil(a);
+    missil = new Missil();
     // this.cenario = c;
     setPasso(1.5);
     c.addPrintable(missil);
     this.c = c;
-    this.applet = a;
     vDireita.setXY(.4, 0);
     atrito.setRaio(0.09);
     vEsquerda.setXY(-0.4d, 0);
@@ -136,7 +130,7 @@ public class Nave extends Sprite {
       misseis = new ArrayList<Missil>();
       try {
         for (int i = 0; i < 20; i++) {
-          misseis.add(new Missil(applet));
+          misseis.add(new Missil());
           c.addPrintable(misseis.get(i));
         }
       } catch (Exception ex) {

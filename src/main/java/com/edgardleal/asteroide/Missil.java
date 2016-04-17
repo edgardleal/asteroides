@@ -3,12 +3,10 @@ package com.edgardleal.asteroide;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-import javax.swing.JApplet;
-
 import com.edgardleal.engine.Colidivel;
+import com.edgardleal.engine.MediaCenter;
 import com.edgardleal.engine.Printable;
 import com.edgardleal.engine.Sprite;
 
@@ -17,6 +15,7 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Constructor for Missil.
+   * 
    * @param img Image
    */
   public Missil(Image img) {
@@ -25,11 +24,12 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Constructor for Missil.
+   * 
    * @param jApplet JApplet
    * @throws MalformedURLException
    */
-  public Missil(JApplet jApplet) throws MalformedURLException {
-    super(jApplet.getImage(new URL(jApplet.getDocumentBase(), "img/misseis.png")));
+  public Missil() throws MalformedURLException {
+    super(MediaCenter.instance().getImage("img/misseis.png"));
     setX1(250);
     setY1(150);
     setWidth(14);
@@ -57,6 +57,7 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Method colidiu.
+   * 
    * @param c Colidivel
    * @see com.edgardleal.engine.Colidivel#colidiu(Colidivel)
    */
@@ -75,6 +76,7 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Method isRead.
+   * 
    * @return boolean
    */
   public boolean isRead() {
@@ -85,6 +87,7 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Method paint.
+   * 
    * @param g Graphics
    * @see com.edgardleal.engine.Printable#paint(Graphics)
    */
@@ -97,6 +100,7 @@ public class Missil extends Sprite implements Printable {
 
   /**
    * Method update.
+   * 
    * @param lista ArrayList<Colidivel>
    * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
    */

@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 
-import javax.swing.JApplet;
+import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +15,10 @@ import org.slf4j.LoggerFactory;
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.GameTicker;
-import com.edgardleal.engine.MediaCenter;
 
 /**
  */
-public class AppletGeral extends JApplet implements KeyListener, CenarioListener {
+public class AppletGeral extends JFrame implements KeyListener, CenarioListener {
   private static final Logger LOGGER = LoggerFactory.getLogger(AppletGeral.class);
   Fase01 fase01;
   Menu1 menu;
@@ -28,19 +27,23 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
   Graphics g;
   Image imgFundo;
   URL urlFundo;
-  MediaCenter mediaCenter;
   GameTicker gameTicker = new GameTicker();
 
   private static final long serialVersionUID = 1L;
+
+
+  public AppletGeral() {
+    init();
+  }
 
   /**
    * Coment�rios para o Javadoc para o m�todo Init
    * 
    */
-  @Override
   public void init() {
     setSize(500, 500);
-    // mediaCenter = new MediaCenter(this);
+    this.setLocationRelativeTo(null);
+    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     tela = this.getContentPane();
 
@@ -53,6 +56,7 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
     } catch (Exception e) {
       LOGGER.error("Erro ao inicializar a applet", e);
     }
+    this.setVisible(true);
   }
 
   public void stop() {
@@ -163,5 +167,9 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
     if (menu == null)
       menu = new Menu1(this);
     return menu;
+  }
+
+  public static void main(String[] args) {
+    new AppletGeral();
   }
 }
