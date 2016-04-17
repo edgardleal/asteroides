@@ -54,7 +54,7 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
 
   private void iniciar() throws Exception {
     gameTicker.add(getFase01());
-    gameTicker.setDelay(20);
+    gameTicker.setDelay(50);
     gameTicker.start();
     tela.add(getFase01());
   }

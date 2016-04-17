@@ -31,8 +31,9 @@ public class GameTicker extends Thread {
       time = time + 1 == Long.MAX_VALUE ? 0 : ++time;
       try {
         synchronized (this) {
-          for (Tickeable t : items)
+          for (Tickeable t : items) {
             t.update(null);
+          }
         }
         Thread.sleep((int) (delay));
       } catch (Exception e) {

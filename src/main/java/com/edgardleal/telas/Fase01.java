@@ -6,6 +6,9 @@ import java.net.URL;
 
 import javax.swing.JApplet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.edgardleal.asteroide.Asteroide;
 import com.edgardleal.asteroide.Missil;
 import com.edgardleal.asteroide.Nave;
@@ -16,6 +19,7 @@ import com.edgardleal.engine.Printable;
 import com.edgardleal.engine.Sprite;
 
 public class Fase01 extends Cenario {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Fase01.class);
   Image imgFundo, imgNave, imgAsteroides;
   public Nave nave;
   public Asteroide asteroide1, asteroide2;
@@ -40,8 +44,7 @@ public class Fase01 extends Cenario {
       this.repaint();
 
     } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("erro ao iniciar o fase1");
+      LOGGER.error("erro ao iniciar o fase1", e);
     }
   }
 
@@ -81,11 +84,12 @@ public class Fase01 extends Cenario {
 
   @Override
   public void ataque(Movable m, int intencidade, int x, int y, int x2, int y2) {
-    for (Printable p : getPrintables())
-      if (p instanceof Asteroide && p != m)
+    for (Printable p : getPrintables()) {
+      if (p instanceof Asteroide && p != m) {
         if (x >= ((Sprite) p).getX1() && x2 <= ((Sprite) p).getX2()) {
           ((Asteroide) p).ataque(intencidade);
-
         }
+      }
+    }
   }
 }
