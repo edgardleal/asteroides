@@ -16,29 +16,33 @@ import com.edgardleal.engine.Vetor;
 /**
  * @author edgard.leal
  *
+ * @version $Revision: 1.0 $
  */
 public class TestVetor extends TestCase {
   static Vetor a, b;
 
   /**
-   * @throws java.lang.Exception
-   */
+  
+   * @throws Exception
+   * @throws java.lang.Exception */
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
     System.out.println("setUpBeforeClass");
   }
 
   /**
-   * @throws java.lang.Exception
-   */
+  
+   * @throws Exception
+   * @throws java.lang.Exception */
   @AfterClass
   public static void tearDownAfterClass() throws Exception {
     System.out.println("tearDownAfterClass");
   }
 
   /**
-   * @throws java.lang.Exception
-   */
+  
+   * @throws Exception
+   * @throws java.lang.Exception */
   @Before
   public void setUp() throws Exception {}
 

@@ -15,29 +15,52 @@ import org.slf4j.LoggerFactory;
 
 import com.edgardleal.engine.Vetor;
 
+/**
+ */
 public class Trajectory {
   private static final Logger LOGGER = LoggerFactory.getLogger(Trajectory.class);
   ArrayList<Vetor> vetores = new ArrayList<Vetor>();
   Vetor deslocamento = new Vetor(2, 0);
   int x, y, pos = 0;
 
+  /**
+   * Constructor for Trajectory.
+   * @param x int
+   * @param y int
+   */
   public Trajectory(int x, int y) {
     this.y = y;
     this.x = x;
   }
 
+  /**
+   * Method setDeslocamento.
+   * @param v Vetor
+   */
   public void setDeslocamento(Vetor v) {
     deslocamento = v;
   }
 
+  /**
+   * Method add.
+   * @param v Vetor
+   */
   public void add(Vetor v) {
     vetores.add(v);
   }
 
+  /**
+   * Method getX.
+   * @return int
+   */
   public int getX() {
     return x;
   }
 
+  /**
+   * Method next.
+   * @return boolean
+   */
   public boolean next() {
     if (pos == vetores.size() - 1)
       return false;
@@ -51,10 +74,18 @@ public class Trajectory {
     return true;
   }
 
+  /**
+   * Method getY.
+   * @return int
+   */
   public int getY() {
     return y;
   }
 
+  /**
+   * Method main.
+   * @param args String[]
+   */
   public static void main(String[] args) {
     Trajectory t = new Trajectory(50, 50);
     t.add(new Vetor(-5, -50));
@@ -70,6 +101,8 @@ public class Trajectory {
 }
 
 
+/**
+ */
 class Tela extends JDialog implements Runnable {
   /**
 	 * 
@@ -80,6 +113,10 @@ class Tela extends JDialog implements Runnable {
   private Vetor v;
   private int delay = 100, x = 0, y = 0;
 
+  /**
+   * Constructor for Tela.
+   * @param t Trajectory
+   */
   public Tela(Trajectory t) {
     this.t = t;
     setSize(400, 400);
@@ -98,15 +135,27 @@ class Tela extends JDialog implements Runnable {
     setModal(true);
   }
 
+  /**
+   * Method setDelay.
+   * @param value int
+   */
   public synchronized void setDelay(int value) {
     delay = value;
   }
 
+  /**
+   * Method next.
+   * @return boolean
+   */
   public boolean next() {
     v = t.vetores.get(t.pos);
     return t.next();
   }
 
+  /**
+   * Method run.
+   * @see java.lang.Runnable#run()
+   */
   @Override
   public void run() {
     while (next()) {
@@ -121,6 +170,10 @@ class Tela extends JDialog implements Runnable {
     }
   }
 
+  /**
+   * Method paint.
+   * @param g java.awt.Graphics
+   */
   @Override
   public void paint(java.awt.Graphics g) {
     super.paint(g);

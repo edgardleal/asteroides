@@ -3,6 +3,8 @@ package com.edgardleal.engine;
 import java.util.ArrayList;
 
 
+/**
+ */
 public class ColisionCenter {
   private ArrayList<Colidivel> lista;
 
@@ -10,10 +12,21 @@ public class ColisionCenter {
     super();
   }
 
+  /**
+   * Method getRaio.
+   * @param c Colidivel
+   * @return int
+   */
   private int getRaio(Colidivel c) {
     return c.getWidth() / 2;
   }
 
+  /**
+   * Method getDistancia.
+   * @param a Colidivel
+   * @param b Colidivel
+   * @return int
+   */
   private int getDistancia(Colidivel a, Colidivel b) {
     int x1 = a.getX() + a.getWidth() / 2, y1 = a.getY() + a.getHeight() / 2, x2 =
         b.getX() + b.getWidth() / 2, y2 = b.getY() + b.getHeight() / 2;
@@ -25,6 +38,7 @@ public class ColisionCenter {
    * Verifica se h� algum objeto em estado de colis�o , caso haja, os dois objetos em colis�o ser�o
    * notificados;
    * 
+   * @return boolean
    */
   public boolean verifica() {
     boolean result = false;
@@ -45,6 +59,12 @@ public class ColisionCenter {
     return result;
   }// verifica
 
+  /**
+   * Method colidindo.
+   * @param a Colidivel
+   * @param b Colidivel
+   * @return boolean
+   */
   private boolean colidindo(Colidivel a, Colidivel b) {
     return getDistancia(a, b) <= getRaio(a) + getRaio(b);
   }
@@ -53,6 +73,7 @@ public class ColisionCenter {
    * Adiciona um item a lista para ser usado na virifica��o de colis�o, Para que seja verificada a
    * colis�o � preciso que os objetos tenham sua propiedade isSolid esteja com o valor true.
    * 
+   * @param c Colidivel
    */
   public void add(Colidivel c) {
     getLista().add(c);
@@ -61,7 +82,8 @@ public class ColisionCenter {
   /**
    * Retorna a lista de todos os objetos adicionados para a verifica��o de colis�o.
    * 
-   * @return
+  
+   * @return ArrayList<Colidivel>
    */
   public ArrayList<Colidivel> getLista() {
     if (lista == null) {

@@ -8,8 +8,17 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 
+ * @author edgardleal
+ *
+ */
 public class Cenario extends JPanel implements Runnable, Updateable {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(Cenario.class);
   Image imgFundo;
   private Thread controle;
   private byte tecla = 0;
@@ -20,8 +29,6 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   // tela
   protected CenarioListener cenarioListener;
   private Vector<Updateable> updateables = new Vector<Updateable>();
-
-  private GameTicker gameTicker = new GameTicker();
 
   /**
    * Lista dos objetos que estar�o sucetiveis de tratamento de colis�o.
@@ -34,21 +41,29 @@ public class Cenario extends JPanel implements Runnable, Updateable {
 	 */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Constructor for Cenario.
+   * 
+   * @param c CenarioListener
+   */
   public Cenario(CenarioListener c) {// Construtor que recebe a imagem
     super(true);// Diz ao JPanel que ele ir� trabalhar com double Buffer
-    gameTicker.add(this);
     this.setIgnoreRepaint(true);// ignora solicita��es de repaint do systema
     // operacinal
     lista = new Vector<Printable>();// Inicializa��o da lista
     cenarioListener = c;
-    controle = new Thread(this);
+    controle = new Thread(this, getClass().getSimpleName());
     controle.setPriority(7);
     gravidade = new Vetor(0, .05);
-    gameTicker.setDelay(30);
-    gameTicker.start();
     controle.start();
+    LOGGER.debug("Cene started");
   }
 
+  /**
+   * Method paint.
+   * 
+   * @param g Graphics
+   */
   @Override
   public void paint(Graphics g) {
     super.paint(g);
@@ -73,18 +88,35 @@ public class Cenario extends JPanel implements Runnable, Updateable {
 
   }
 
+  /**
+   * Method setImgFundo.
+   * 
+   * @param img Image
+   */
   public void setImgFundo(Image img) {
     this.imgFundo = img;
   }
 
+  /**
+   * Method addPrintable.
+   * 
+   * @param p Printable
+   */
   public synchronized void addPrintable(Printable p) {
     lista.add(p);
-    if (p instanceof Colidivel)
+    if (p instanceof Colidivel) {
       colisionCenter.add((Colidivel) p);
-    if (p instanceof Tickeable)
+    }
+    if (p instanceof Tickeable) {
       updateables.add((Updateable) p);
+    }
   }
 
+  /**
+   * Method run.
+   * 
+   * @see java.lang.Runnable#run()
+   */
   @Override
   public void run() {
     while (controle != null) {
@@ -94,27 +126,43 @@ public class Cenario extends JPanel implements Runnable, Updateable {
           this.repaint();
         }
       } catch (Exception e) {
-        System.out.println("Erro no gameLoop : " + e.getMessage());
+        LOGGER.error("Erro no gameLoop : ", e.getMessage());
       }
     }
   }
 
-  public void pause() {
+  public synchronized void pause() {
     isPaused = !isPaused;
   }
 
+  /**
+   * Method notifyTecla.
+   * 
+   * @param tecla byte
+   */
   public void notifyTecla(byte tecla) {
+    LOGGER.debug("Key notified: {}", tecla);
     this.tecla = tecla;
   }
 
+  /**
+   * Method keyDown.
+   * 
+   * @param tecla byte
+   */
   public synchronized void keyDown(byte tecla) {
-    System.out.println("Key pressed: " + tecla);
+    LOGGER.debug("Key pressed: " + tecla);
     for (Printable p : lista) {
       if (p instanceof Sprite)
         ((Sprite) (p)).keyDown(tecla);
     }
   }
 
+  /**
+   * Method keyUp.
+   * 
+   * @param tecla byte
+   */
   public synchronized void keyUp(byte tecla) {
     for (Printable p : lista) {
       if (p instanceof Sprite)
@@ -143,6 +191,11 @@ public class Cenario extends JPanel implements Runnable, Updateable {
     }
   }
 
+  /**
+   * Method getPrintables.
+   * 
+   * @return Vector<Printable>
+   */
   public Vector<Printable> getPrintables() {
     if (lista == null)
       lista = new Vector<Printable>();
@@ -159,6 +212,11 @@ public class Cenario extends JPanel implements Runnable, Updateable {
     colisionCenter.add(c);
   }
 
+  /**
+   * Method getTimer.
+   * 
+   * @return long
+   */
   public long getTimer() {
     return timer;
   }
@@ -167,8 +225,14 @@ public class Cenario extends JPanel implements Runnable, Updateable {
     timer = 0;
   }
 
+  /**
+   * Method update.
+   * 
+   * @param lista ArrayList<Colidivel>
+   * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
+   */
   public synchronized void update(ArrayList<Colidivel> lista) {
-    synchronized (gameTicker) {
+    synchronized (this) {
       for (Updateable u : updateables) {
         u.update(null);
         if (u instanceof Sprite) {

@@ -10,6 +10,8 @@ import javax.swing.JApplet;
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 
+/**
+ */
 public class Menu1 extends Cenario {
   private Image imgFundo;
   /**
@@ -17,6 +19,11 @@ public class Menu1 extends Cenario {
 	 */
   private static final long serialVersionUID = 7330968515069117294L;
 
+  /**
+   * Constructor for Menu1.
+   * @param applet JApplet
+   * @throws MalformedURLException
+   */
   public Menu1(JApplet applet) throws MalformedURLException {
     super((CenarioListener) applet);
     imgFundo = applet.getImage(new URL(applet.getDocumentBase(), "img/fundo_menu.png"));
@@ -26,6 +33,10 @@ public class Menu1 extends Cenario {
     this.repaint();
   }
 
+  /**
+   * Method paint.
+   * @param g java.awt.Graphics
+   */
   @Override
   public void paint(java.awt.Graphics g) {
     super.paint(g);

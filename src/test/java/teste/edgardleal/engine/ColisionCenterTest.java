@@ -11,17 +11,35 @@ import org.junit.Test;
 import com.edgardleal.engine.ColisionCenter;
 import com.edgardleal.engine.Movable;
 
+/**
+ */
 public class ColisionCenterTest extends TestCase {
 
+  /**
+   * Method setUpBeforeClass.
+   * @throws Exception
+   */
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {}
 
+  /**
+   * Method tearDownAfterClass.
+   * @throws Exception
+   */
   @AfterClass
   public static void tearDownAfterClass() throws Exception {}
 
+  /**
+   * Method setUp.
+   * @throws Exception
+   */
   @Before
   public void setUp() throws Exception {}
 
+  /**
+   * Method tearDown.
+   * @throws Exception
+   */
   @After
   public void tearDown() throws Exception {}
 
@@ -33,6 +51,10 @@ public class ColisionCenterTest extends TestCase {
     System.out.println("Resultdo : " + lista.verifica());
   }
 
+  /**
+   * Method getMovable.
+   * @return Movable
+   */
   private Movable getMovable() {
     Movable m = new Movable();
     m.setWidth(10);

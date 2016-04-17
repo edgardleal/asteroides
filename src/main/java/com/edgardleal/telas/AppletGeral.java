@@ -9,13 +9,18 @@ import java.net.URL;
 
 import javax.swing.JApplet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.GameTicker;
 import com.edgardleal.engine.MediaCenter;
 
+/**
+ */
 public class AppletGeral extends JApplet implements KeyListener, CenarioListener {
-
+  private static final Logger LOGGER = LoggerFactory.getLogger(AppletGeral.class);
   Fase01 fase01;
   Menu1 menu;
   Container tela;
@@ -38,13 +43,15 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
     // mediaCenter = new MediaCenter(this);
 
     tela = this.getContentPane();
+
     this.setLayout(null);/* Desativa o gerenciador de Layout */
     this.addKeyListener(this);
     this.requestFocus();
     try {
       iniciar();
+      LOGGER.debug("Applet inicializada");
     } catch (Exception e) {
-      e.printStackTrace();
+      LOGGER.error("Erro ao inicializar a applet", e);
     }
   }
 
@@ -52,14 +59,28 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
 
   }
 
+  /**
+   * Method iniciar.
+   * 
+   * @throws Exception
+   */
   private void iniciar() throws Exception {
+    getFase01().addKeyListener(this);
     gameTicker.add(getFase01());
     gameTicker.setDelay(50);
     gameTicker.start();
     tela.add(getFase01());
   }
 
+  /**
+   * Method keyPressed.
+   * 
+   * @param key KeyEvent
+   * @see java.awt.event.KeyListener#keyPressed(KeyEvent)
+   */
+  @Override
   public void keyPressed(KeyEvent key) {
+    LOGGER.debug("keyPressed: {}", key.getKeyCode());
     getFase01().keyDown((byte) key.getKeyCode());
     getFase01().notifyTecla((byte) key.getKeyCode());
     if (key.getKeyChar() == 27) {
@@ -67,12 +88,36 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
     }
   }
 
+  /**
+   * Method keyReleased.
+   * 
+   * @param key KeyEvent
+   * @see java.awt.event.KeyListener#keyReleased(KeyEvent)
+   */
+  @Override
   public void keyReleased(KeyEvent key) {
+    LOGGER.debug("keyReleased: {}", key.getKeyCode());
     getFase01().keyUp((byte) key.getKeyCode());
   }
 
-  public void keyTyped(KeyEvent key) {}
+  /**
+   * Method keyTyped.
+   * 
+   * @param key KeyEvent
+   * @see java.awt.event.KeyListener#keyTyped(KeyEvent)
+   */
+  public void keyTyped(KeyEvent key) {
 
+    LOGGER.debug("Key pressed: {}", key.getKeyCode());
+  }
+
+  /**
+   * Method fim.
+   * 
+   * @param sender Cenario
+   * @return int
+   * @see com.edgardleal.engine.CenarioListener#fim(Cenario)
+   */
   @Override
   public int fim(Cenario sender) {
     tela.remove(menu);
@@ -97,12 +142,23 @@ public class AppletGeral extends JApplet implements KeyListener, CenarioListener
     }
   }
 
+  /**
+   * Method getFase01.
+   * 
+   * @return Fase01
+   */
   public Fase01 getFase01() {
     if (fase01 == null)
       fase01 = new Fase01(this);
     return fase01;
   }
 
+  /**
+   * Method getMenu1.
+   * 
+   * @return Menu1
+   * @throws Exception
+   */
   public Menu1 getMenu1() throws Exception {
     if (menu == null)
       menu = new Menu1(this);

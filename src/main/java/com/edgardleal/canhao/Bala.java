@@ -8,6 +8,8 @@ import com.edgardleal.engine.Colidivel;
 import com.edgardleal.engine.Sprite;
 import com.edgardleal.engine.Vetor;
 
+/**
+ */
 public class Bala extends Sprite {
 
 
@@ -26,10 +28,18 @@ public class Bala extends Sprite {
     aceleracao.setRaioLimite(3);
   }
 
+  /**
+   * Method getAceleracao.
+   * @return Vetor
+   */
   public Vetor getAceleracao() {
     return aceleracao;
   }
 
+  /**
+   * Method mover.
+   * @param gravidade Vetor
+   */
   @Override
   public void mover(Vetor gravidade) {
     super.mover(gravidade);
@@ -37,11 +47,20 @@ public class Bala extends Sprite {
       this.setVisible(false);
   }
 
+  /**
+   * Method onFrameChange.
+   * @param frame int
+   */
   @Override
   public void onFrameChange(int frame) {
     super.onFrameChange(frame);
   }
 
+  /**
+   * Method update.
+   * @param lista ArrayList<Colidivel>
+   * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
+   */
   @Override
   public void update(ArrayList<Colidivel> lista) {
     if (!this.isVisible())

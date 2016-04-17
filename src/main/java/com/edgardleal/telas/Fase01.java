@@ -18,6 +18,8 @@ import com.edgardleal.engine.Movable;
 import com.edgardleal.engine.Printable;
 import com.edgardleal.engine.Sprite;
 
+/**
+ */
 public class Fase01 extends Cenario {
   private static final Logger LOGGER = LoggerFactory.getLogger(Fase01.class);
   Image imgFundo, imgNave, imgAsteroides;
@@ -26,6 +28,11 @@ public class Fase01 extends Cenario {
   public Missil missil;
   private int perdas = 0, acertos = 0;
 
+  /**
+   * Constructor for Fase01.
+   * 
+   * @param applet JApplet
+   */
   public Fase01(JApplet applet) {
     super(null);
     try {
@@ -48,6 +55,11 @@ public class Fase01 extends Cenario {
     }
   }
 
+  /**
+   * Method addPrintable.
+   * 
+   * @param p Printable
+   */
   @Override
   public void addPrintable(Printable p) {
     if (p instanceof Colidivel)
@@ -74,6 +86,11 @@ public class Fase01 extends Cenario {
     acertos++;
   }
 
+  /**
+   * Method paint.
+   * 
+   * @param g java.awt.Graphics
+   */
   @Override
   public void paint(java.awt.Graphics g) {
     super.paint(g);
@@ -82,6 +99,16 @@ public class Fase01 extends Cenario {
     g.drawString("Perdas : " + perdas, 10, 30);
   }
 
+  /**
+   * Method ataque.
+   * 
+   * @param m Movable
+   * @param intencidade int
+   * @param x int
+   * @param y int
+   * @param x2 int
+   * @param y2 int
+   */
   @Override
   public void ataque(Movable m, int intencidade, int x, int y, int x2, int y2) {
     for (Printable p : getPrintables()) {

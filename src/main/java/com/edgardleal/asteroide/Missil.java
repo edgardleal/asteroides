@@ -15,10 +15,19 @@ import com.edgardleal.engine.Sprite;
 public class Missil extends Sprite implements Printable {
   private boolean read = true;
 
+  /**
+   * Constructor for Missil.
+   * @param img Image
+   */
   public Missil(Image img) {
     super(img);
   }
 
+  /**
+   * Constructor for Missil.
+   * @param jApplet JApplet
+   * @throws MalformedURLException
+   */
   public Missil(JApplet jApplet) throws MalformedURLException {
     super(jApplet.getImage(new URL(jApplet.getDocumentBase(), "img/misseis.png")));
     setX1(250);
@@ -46,6 +55,11 @@ public class Missil extends Sprite implements Printable {
     read = true;
   }
 
+  /**
+   * Method colidiu.
+   * @param c Colidivel
+   * @see com.edgardleal.engine.Colidivel#colidiu(Colidivel)
+   */
   @Override
   public void colidiu(Colidivel c) {
     if (c instanceof Nave)
@@ -59,12 +73,21 @@ public class Missil extends Sprite implements Printable {
     hide();
   }
 
+  /**
+   * Method isRead.
+   * @return boolean
+   */
   public boolean isRead() {
     return read;
   }
 
 
 
+  /**
+   * Method paint.
+   * @param g Graphics
+   * @see com.edgardleal.engine.Printable#paint(Graphics)
+   */
   @Override
   public void paint(Graphics g) {
     if (!isVisible())
@@ -72,6 +95,11 @@ public class Missil extends Sprite implements Printable {
     super.paint(g);
   }
 
+  /**
+   * Method update.
+   * @param lista ArrayList<Colidivel>
+   * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
+   */
   @Override
   public void update(ArrayList<Colidivel> lista) {
     mover();
