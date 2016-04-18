@@ -62,7 +62,7 @@ public class Asteroide extends Sprite {
     if (explodindo) {
       return;
     }
-    setSolid(false);
+    // setSolid(false);
     setExplodindo(true);
     getTimeline().gotoFrame(4);
   }
@@ -100,7 +100,8 @@ public class Asteroide extends Sprite {
 
   @Override
   public void onFrameEnd(int frame) {
-    if (frame == 6)
+    if (frame == 6) {
       reset();
+    }
   }
 }

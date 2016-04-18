@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import javax.swing.JApplet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +21,7 @@ public class Nave extends Sprite {
   private boolean atirando = false;
   private Missil missil;
   private ArrayList<Missil> misseis;
-  private Cenario c = null;
-  private JApplet applet;
+  private Cenario cenario = null;
   /**
    * Indica um limite para lancamento de m�sseis.
    * 
@@ -53,9 +50,9 @@ public class Nave extends Sprite {
     // this.cenario = c;
     setPasso(1.5);
     c.addPrintable(missil);
-    this.c = c;
+    this.cenario = c;
     vDireita.setXY(.4, 0);
-    atrito.setRaio(0.09);
+    atrito.setRaio(0.02);
     vEsquerda.setXY(-0.4d, 0);
     aceleracao.setRaioLimite(8);
     aceleracao.setXY(.0, .0);
@@ -64,14 +61,18 @@ public class Nave extends Sprite {
 
   @Override
   public void direita() {
-    if (getX2() >= 500)
+    if (getX2() >= 500) {
       return;
-    super.direita();
+    } else {
+      this.setLocation(getX1() + 5, getY1());
+      // super.direita();
+    }
   }
 
   public void lancar() {
-    if (timerDeLancamento != 0)
+    if (timerDeLancamento != 0) {
       return;
+    }
     for (Missil m : getMisseis())
       if (m.isRead()) {
         m.setLocation(this.getX1() + (getWidth() / 2) - 6, this.getY1());
@@ -83,9 +84,12 @@ public class Nave extends Sprite {
 
   @Override
   public void esquerda() {
-    if (getX1() <= 0)
+    if (getX1() <= 0) {
       return;
-    super.esquerda();
+    } else {
+      // super.esquerda();
+      this.setLocation(getX1() - 5, getY1());
+    }
   }
 
   /**
@@ -131,9 +135,10 @@ public class Nave extends Sprite {
       try {
         for (int i = 0; i < 20; i++) {
           misseis.add(new Missil());
-          c.addPrintable(misseis.get(i));
+          cenario.addPrintable(misseis.get(i));
         }
       } catch (Exception ex) {
+        LOGGER.error("Erro processando os misseis", ex);
       }
     }
     return misseis;
@@ -161,7 +166,7 @@ public class Nave extends Sprite {
       lancar();
     }
     if (teclas[10])
-      ((Fase01) c).ataque(this, 100, 0, 0, 500, 500);
+      ((Fase01) cenario).ataque(this, 100, 0, 0, 500, 500);
 
     nextFrame();// muda para o proximo quadro
   }
@@ -185,7 +190,7 @@ public class Nave extends Sprite {
       g.setColor(Color.cyan);
       g.drawLine(getX1() + getWidth() / 2 + 1, getY1(), getX1() + getWidth() / 2 + 1, 0);
       atirando = false;
-      c.ataque(this, 5, getX1() + getWidth() / 2, getY1(), getX1() + getWidth() / 2, 0);
+      cenario.ataque(this, 5, getX1() + getWidth() / 2, getY1(), getX1() + getWidth() / 2, 0);
     }
     g.setColor(Color.red);
     g.fillRect(30, 10, (int) (aceleracao.getRaio() * 50), 5);

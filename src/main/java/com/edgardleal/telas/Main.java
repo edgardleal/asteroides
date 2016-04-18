@@ -18,8 +18,8 @@ import com.edgardleal.engine.GameTicker;
 
 /**
  */
-public class AppletGeral extends JFrame implements KeyListener, CenarioListener {
-  private static final Logger LOGGER = LoggerFactory.getLogger(AppletGeral.class);
+public class Main extends JFrame implements KeyListener, CenarioListener {
+  private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
   Fase01 fase01;
   Menu1 menu;
   Container tela;
@@ -32,7 +32,7 @@ public class AppletGeral extends JFrame implements KeyListener, CenarioListener 
   private static final long serialVersionUID = 1L;
 
 
-  public AppletGeral() {
+  public Main() {
     init();
   }
 
@@ -170,6 +170,6 @@ public class AppletGeral extends JFrame implements KeyListener, CenarioListener 
   }
 
   public static void main(String[] args) {
-    new AppletGeral();
+    new Main();
   }
 }

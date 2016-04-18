@@ -21,7 +21,7 @@ import com.edgardleal.engine.Sprite;
  */
 public class Fase01 extends Cenario {
   private static final Logger LOGGER = LoggerFactory.getLogger(Fase01.class);
-  Image imgFundo, imgNave, imgAsteroides;
+  private Image imgFundo;
   public Nave nave;
   public Asteroide asteroide1, asteroide2;
   public Missil missil;

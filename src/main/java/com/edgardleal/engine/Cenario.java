@@ -1,6 +1,5 @@
 package com.edgardleal.engine;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -68,9 +67,10 @@ public class Cenario extends JPanel implements Runnable, Updateable {
   public void paint(Graphics g) {
     super.paint(g);
     if (isPaused) {
-      g.setColor(Color.blue);
-      g.fillRect(0, 0, 800, 600);
-      return;
+      // TODO: rebuild the pause screen
+      // g.setColor(Color.blue);
+      // g.fillRect(0, 0, 800, 600);
+      // return;
     }
     if (imgFundo != null) {// Verifica se a imagem foi passada. Para evitar
       // erros
@@ -85,7 +85,6 @@ public class Cenario extends JPanel implements Runnable, Updateable {
     for (Printable p : lista) { // Varredura da lista
       p.paint(g);
     }
-
   }
 
   /**
@@ -232,7 +231,11 @@ public class Cenario extends JPanel implements Runnable, Updateable {
    * @see com.edgardleal.engine.Tickeable#update(ArrayList<Colidivel>)
    */
   public synchronized void update(ArrayList<Colidivel> lista) {
+    if (isPaused) {
+      return;
+    }
     synchronized (this) {
+
       for (Updateable u : updateables) {
         u.update(null);
         if (u instanceof Sprite) {
