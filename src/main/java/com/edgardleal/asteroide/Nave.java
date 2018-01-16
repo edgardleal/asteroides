@@ -33,10 +33,8 @@ public class Nave extends Sprite {
 
   /**
    * Constructor for Nave.
-   * 
-   * @param a JApplet
+   *
    * @param c Cenario
-   * @throws MalformedURLException
    */
   public Nave(Cenario c) throws MalformedURLException {
     super(MediaCenter.instance().getImage("img/nave2.png"));
@@ -131,7 +129,7 @@ public class Nave extends Sprite {
    */
   public ArrayList<Missil> getMisseis() {
     if (misseis == null) {
-      misseis = new ArrayList<Missil>();
+      misseis = new ArrayList<>();
       try {
         for (int i = 0; i < 20; i++) {
           misseis.add(new Missil());
@@ -166,7 +164,7 @@ public class Nave extends Sprite {
       lancar();
     }
     if (teclas[10])
-      ((Fase01) cenario).ataque(this, 100, 0, 0, 500, 500);
+      cenario.ataque(this, 100, 0, 0, 500, 500);
 
     nextFrame();// muda para o proximo quadro
   }

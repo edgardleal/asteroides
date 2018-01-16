@@ -22,10 +22,10 @@ public class Missil extends Sprite {
   }
 
   /**
+   * <p>
    * Constructor for Missil.
-   * 
-   * @param jApplet JApplet
-   * @throws MalformedURLException
+   * </p>
+   *
    */
   public Missil() {
     super(MediaCenter.instance().getImage("img/misseis.png"));

@@ -1,6 +1,5 @@
 package com.edgardleal.engine;
 
-import java.applet.AudioClip;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -37,8 +36,8 @@ public class MediaCenter implements Runnable {
   private JProgressBar progressBar;
   private Thread controle;
   private JDialog janela;
-  private Vector<String> listaTemporaria = new Vector<String>();
-  private Vector<String> listaURLSounds = new Vector<String>();
+  private Vector<String> listaTemporaria = new Vector<>();
+  private Vector<String> listaURLSounds = new Vector<>();
 
 
   private static MediaCenter innerInstance;
@@ -46,12 +45,11 @@ public class MediaCenter implements Runnable {
   /**
    * Constructor for MediaCenter.
    * 
-   * @param applet JApplet
    */
   private MediaCenter() {
     controle = new Thread(this, getClass().getSimpleName());
     imagens = new HashMap<>();
-    sounds = new HashMap<String, Clip>();
+    sounds = new HashMap<>();
   }
 
   public static MediaCenter instance() {
@@ -182,7 +180,7 @@ public class MediaCenter implements Runnable {
    */
   public HashMap<String, Image> getImages() {
     if (imagens == null) {
-      imagens = new HashMap<String, Image>();
+      imagens = new HashMap<>();
     }
     return imagens;
   }
@@ -196,8 +194,8 @@ public class MediaCenter implements Runnable {
   public void run() {
     boolean erro = false;
     try {
-      for (int i = 0; i < listaTemporaria.size(); i++) {
-        add(listaTemporaria.get(i), getImage(listaTemporaria.get(i)));
+      for (String aListaTemporaria : listaTemporaria) {
+        add(aListaTemporaria, getImage(aListaTemporaria));
       }
 
     } catch (Exception ex) {
@@ -205,7 +203,7 @@ public class MediaCenter implements Runnable {
       erro = true; /* Silenciador */
     }
 
-    int totalOk = 0;
+    int totalOk;
     while (!getTracker().checkAll()) {
       totalOk = 0;
       for (int i = 0; i < getImages().size(); i++) {
@@ -222,6 +220,7 @@ public class MediaCenter implements Runnable {
             .println("Itens checkados " + totalOk + " , total de itens " + getImages().size());
       } catch (Exception e) {
         // Sinlenciador da exce��o
+        LOGGER.error("Thread sleep was interrupted", e);
       }// try
     }// while
     janela.setVisible(false);
@@ -273,7 +272,7 @@ public class MediaCenter implements Runnable {
    */
   public HashMap<String, Clip> getSounds() {
     if (sounds == null) {
-      sounds = new HashMap<String, Clip>();
+      sounds = new HashMap<>();
     }
     return sounds;
   }
@@ -284,8 +283,8 @@ public class MediaCenter implements Runnable {
    * @param chave String
    * @return AudioClip
    */
-  public AudioClip getSound(String chave) {
-    return getSound(chave);
+  public Clip getSound(String chave) {
+    return getSounds().get(chave);
   }
 
 }// class

@@ -1,20 +1,15 @@
 package com.edgardleal.telas;
 
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.net.URL;
-
-import javax.swing.JFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.GameTicker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  */
@@ -23,10 +18,6 @@ public class Main extends JFrame implements KeyListener, CenarioListener {
   Fase01 fase01;
   Menu1 menu;
   Container tela;
-  int x = 0;
-  Graphics g;
-  Image imgFundo;
-  URL urlFundo;
   GameTicker gameTicker = new GameTicker();
 
   private static final long serialVersionUID = 1L;
@@ -40,7 +31,7 @@ public class Main extends JFrame implements KeyListener, CenarioListener {
    * Coment�rios para o Javadoc para o m�todo Init
    * 
    */
-  public void init() {
+  private void init() {
     setSize(500, 500);
     this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,16 +50,12 @@ public class Main extends JFrame implements KeyListener, CenarioListener {
     this.setVisible(true);
   }
 
-  public void stop() {
-
-  }
-
   /**
    * Method iniciar.
    * 
    * @throws Exception
    */
-  private void iniciar() throws Exception {
+  private void iniciar() {
     getFase01().addKeyListener(this);
     gameTicker.add(getFase01());
     gameTicker.setDelay(50);

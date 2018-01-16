@@ -26,11 +26,12 @@ public class Fase01 extends Cenario {
   public Asteroide asteroide1, asteroide2;
   public Missil missil;
   private int perdas = 0, acertos = 0;
+  private static final int SCORE_LEFT = 10;
 
   /**
    * Constructor for Fase01.
-   * 
-   * @param applet JApplet
+   *
+   * @param listener
    */
   public Fase01(CenarioListener listener) {
     super(listener);
@@ -94,8 +95,8 @@ public class Fase01 extends Cenario {
   public void paint(java.awt.Graphics g) {
     super.paint(g);
     g.setColor(Color.black);
-    g.drawString("Pontos : " + acertos, 10, 10);
-    g.drawString("Perdas : " + perdas, 10, 30);
+    g.drawString("Pontos : " + acertos, SCORE_LEFT, 10);
+    g.drawString("Perdas : " + perdas, SCORE_LEFT, 30);
   }
 
   /**

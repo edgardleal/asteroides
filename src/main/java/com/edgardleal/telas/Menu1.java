@@ -1,12 +1,10 @@
 package com.edgardleal.telas;
 
-import java.awt.Color;
-import java.awt.Image;
-import java.net.MalformedURLException;
-
 import com.edgardleal.engine.Cenario;
 import com.edgardleal.engine.CenarioListener;
 import com.edgardleal.engine.MediaCenter;
+
+import java.awt.*;
 
 /**
  */
@@ -20,10 +18,8 @@ public class Menu1 extends Cenario {
   /**
    * Constructor for Menu1.
    * 
-   * @param applet JApplet
-   * @throws MalformedURLException
    */
-  public Menu1(CenarioListener listener) throws MalformedURLException {
+  public Menu1(CenarioListener listener) {
     super(listener);
     imgFundo = MediaCenter.instance().getImage("img/fundo_menu.png");
     this.setBackground(Color.black);

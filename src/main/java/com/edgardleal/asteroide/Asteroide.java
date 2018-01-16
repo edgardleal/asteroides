@@ -19,7 +19,7 @@ public class Asteroide extends Sprite {
   private int id = -1;
   private Cenario c = null;
 
-  public Asteroide(Cenario c) throws Exception {
+  public Asteroide(Cenario c) {
     super(MediaCenter.instance().getImage("img/enemy1.png"));
     this.id = ++count;
     getTimeline().add(0, 1, 32, 31, 0, 5); // 0
